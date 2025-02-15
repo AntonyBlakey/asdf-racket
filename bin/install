@@ -7,7 +7,7 @@ fail() {
 
 racket_pkg() {
   local version=$1
-  echo "https://mirror.racket-lang.org/installers/${version}/racket-minimal-${version}-src-builtpackages.tgz"
+  echo "https://mirror.racket-lang.org/installers/${version}/racket-minimal-${version}-src-builtpkgs.tgz"
 }
 
 racket_install() {
@@ -36,7 +36,7 @@ racket_install() {
     fi
 
     racket_pkg "$release"
-    curl -L "$(racket_pkg "$release")" >r"acket-${release}.tgz"
+    curl -L "$(racket_pkg "$release")" >racket-${release}.tgz
     tar -xf "racket-${release}.tgz"
     cd "racket-${release}/src/"
     xargs ./configure <<<"${ASDF_RACKET_CONFIG_FLAGS}" || fail "Configuration failed"
