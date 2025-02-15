@@ -7,11 +7,7 @@ fail() {
 
 racket_pkg() {
   local version=$1
-  local platform="src-builtpkgs"
-  if [ "${ASDF_RACKET_MINIMAL}" == "true" ]; then
-    platform="src"
-  fi
-  echo "https://mirror.racket-lang.org/installers/${version}/racket-${version}-${platform}.tgz"
+  echo "https://mirror.racket-lang.org/installers/${version}/racket-minimal-${version}-src-builtpackages.tgz"
 }
 
 racket_install() {
@@ -47,8 +43,8 @@ racket_install() {
     make || fail "Build failed"
     make install || fail "Installation failed"
 
-    if [ "${ASDF_RACKET_MINIMAL}" != "true" ]; then
-      "$install_path/bin/raco" pkg install --auto -i main-distribution
+    if [ "$(uname -s)" == "Darwin" ]; then
+      "$install_path/bin/raco" pkg update --auto racket-lib
     fi
 
     echo "Installed Racket ${release}"
